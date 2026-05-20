@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecureGuard AI — Team Confluence Page</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1117;
+    --ink-2: #2a2d38;
+    --ink-3: #4a4e5c;
+    --ink-4: #7a7f92;
+    --paper: #f8f7f4;
+    --paper-2: #f0ede8;
+    --paper-3: #e5e1d8;
+    --accent: #d4380d;
+    --accent-2: #f5622e;
+    --accent-pale: #fff2ee;
+    --teal: #006d75;
+    --teal-pale: #e6fffb;
+    --gold: #b37400;
+    --gold-pale: #fffbe6;
+    --navy: #1d3557;
+    --navy-pale: #e8f0fe;
+    --success: #237804;
+    --success-pale: #f6ffed;
+    --warn: #ad6800;
+    --warn-pale: #fffbe6;
+    --danger: #a8071a;
+    --danger-pale: #fff1f0;
+    --rule: #d9d4cb;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Display', serif;
+    --radius: 6px;
+    --shadow: 0 1px 4px rgba(15,17,23,.08), 0 4px 16px rgba(15,17,23,.06);
+    --shadow-lg: 0 2px 8px rgba(15,17,23,.10), 0 8px 32px rgba(15,17,23,.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR NAV ── */
+  .sidebar {
+    background: var(--ink);
+    color: #c8c9cf;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 0;
+    font-size: 13px;
+  }
+
+  .sidebar-brand {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+
+  .sidebar-brand .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-brand .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .sidebar-brand .logo-name {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+    letter-spacing: -.01em;
+  }
+
+  .sidebar-brand .logo-sub {
+    font-size: 11px;
+    color: var(--ink-4);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-meta {
+    padding: 10px 20px 16px;
+    font-size: 11px;
+    color: var(--ink-4);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+
+  .sidebar-meta span { display: block; margin-bottom: 2px; }
+
+  .nav-group { padding: 16px 0 8px; }
+
+  .nav-group-label {
+    padding: 0 20px 6px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--ink-4);
+    font-weight: 500;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 20px;
+    color: #9ca0b0;
+    text-decoration: none;
+    transition: all .15s;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .nav-link:hover { background: rgba(255,255,255,.06); color: #fff; }
+  .nav-link.active { background: rgba(212,56,13,.15); color: #ff8a65; border-right: 2px solid var(--accent-2); }
+
+  .nav-link .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: .4;
+    flex-shrink: 0;
+  }
+
+  .nav-sub { padding: 0 0 0 28px; }
+
+  .nav-sub .nav-link {
+    font-size: 12px;
+    padding: 5px 20px 5px 0;
+    color: #727688;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--ink);
+    color: #fff;
+    padding: 56px 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,56,13,.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 200px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,109,117,.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--ink-4);
+    margin-bottom: 20px;
+    letter-spacing: .03em;
+  }
+
+  .breadcrumb a { color: #7a7f92; text-decoration: none; }
+  .breadcrumb a:hover { color: #c8c9cf; }
+  .breadcrumb span { margin: 0 6px; }
+
+  .page-header h1 {
+    font-family: var(--serif);
+    font-size: 42px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    letter-spacing: -.02em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-header h1 em {
+    font-style: italic;
+    color: #ff8a65;
+  }
+
+  .page-header .tagline {
+    font-size: 16px;
+    color: #9ca0b0;
+    max-width: 620px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 28px;
+  }
+
+  .header-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .02em;
+  }
+
+  .badge-version { background: rgba(212,56,13,.25); color: #ff8a65; border: 1px solid rgba(212,56,13,.3); }
+  .badge-status  { background: rgba(35,120,4,.25); color: #95de64; border: 1px solid rgba(35,120,4,.3); }
+  .badge-lang    { background: rgba(255,255,255,.08); color: #9ca0b0; border: 1px solid rgba(255,255,255,.1); }
+
+  /* ── CONTENT AREA ── */
+  .content {
+    padding: 0 64px 80px;
+    max-width: 960px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 48px 0 0;
+    border-top: 1px solid var(--rule);
+    margin-top: 48px;
+  }
+
+  .section:first-child { border-top: none; margin-top: 0; padding-top: 48px; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 20px;
+    letter-spacing: -.02em;
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 32px 0 12px;
+    letter-spacing: -.01em;
+  }
+
+  h4 {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--ink-3);
+    margin: 24px 0 8px;
+  }
+
+  p { margin-bottom: 14px; color: var(--ink-2); }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  strong { font-weight: 600; color: var(--ink); }
+
+  code {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 20px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; margin-bottom: 4px; font-size: 14px; }
+  .callout-body p { margin: 0; font-size: 14px; }
+
+  .callout-info    { background: var(--navy-pale); border-left: 3px solid var(--navy); }
+  .callout-warn    { background: var(--warn-pale); border-left: 3px solid var(--warn); }
+  .callout-danger  { background: var(--danger-pale); border-left: 3px solid var(--danger); }
+  .callout-success { background: var(--success-pale); border-left: 3px solid var(--success); }
+  .callout-accent  { background: var(--accent-pale); border-left: 3px solid var(--accent); }
+
+  /* ── STAT CARDS ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .stat-card {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-card .stat-num {
+    font-family: var(--serif);
+    font-size: 36px;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-card .stat-num.accent { color: var(--accent); }
+  .stat-card .stat-num.teal   { color: var(--teal); }
+  .stat-card .stat-num.navy   { color: var(--navy); }
+
+  .stat-card .stat-label {
+    font-size: 12px;
+    color: var(--ink-4);
+    letter-spacing: .03em;
+    line-height: 1.4;
+  }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 20px 0;
+  }
+
+  th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--ink);
+    color: #9ca0b0;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    border: none;
+  }
+
+  th:first-child { border-radius: 6px 0 0 0; }
+  th:last-child  { border-radius: 0 6px 0 0; }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-2);
+    vertical-align: top;
+  }
+
+  tr:hover td { background: var(--paper-2); }
+
+  /* ── ARCHITECTURE DIAGRAMS ── */
+  .arch-diagram {
+    background: var(--ink);
+    border-radius: 10px;
+    padding: 32px;
+    margin: 24px 0;
+    font-family: var(--mono);
+    color: #c8c9cf;
+    font-size: 12px;
+    line-height: 1.8;
+    overflow-x: auto;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .arch-diagram .arch-title {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--ink-4);
+    margin-bottom: 20px;
+  }
+
+  .arch-diagram .red  { color: #ff8a65; }
+  .arch-diagram .teal { color: #5cdbd3; }
+  .arch-diagram .gold { color: #ffc53d; }
+  .arch-diagram .blue { color: #69b1ff; }
+  .arch-diagram .green{ color: #95de64; }
+  .arch-diagram .muted{ color: #4a4e5c; }
+
+  /* ── COMPONENT CARDS ── */
+  .component-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .component-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  .component-card .comp-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .comp-icon {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .comp-icon.red    { background: var(--accent-pale); }
+  .comp-icon.teal   { background: var(--teal-pale); }
+  .comp-icon.navy   { background: var(--navy-pale); }
+  .comp-icon.gold   { background: var(--gold-pale); }
+  .comp-icon.green  { background: var(--success-pale); }
+
+  .comp-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .comp-file {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-4);
+  }
+
+  .component-card p {
+    font-size: 13px;
+    margin: 0;
+    color: var(--ink-3);
+  }
+
+  .comp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .comp-tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    color: var(--ink-4);
+    font-family: var(--mono);
+  }
+
+  /* ── LAYER DIAGRAM ── */
+  .layer-stack {
+    margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .layer {
+    border-radius: 6px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .layer-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .layer-content { flex: 1; }
+  .layer-name { font-weight: 600; font-size: 14px; }
+  .layer-desc { font-size: 12.5px; margin-top: 2px; opacity: .8; }
+  .layer-meta { font-size: 12px; font-family: var(--mono); opacity: .7; white-space: nowrap; }
+
+  .layer-1 { background: var(--teal-pale);   border: 1px solid #87e8de; }
+  .layer-1 .layer-num { background: var(--teal); color: #fff; }
+  .layer-1 .layer-name { color: var(--teal); }
+
+  .layer-2 { background: var(--gold-pale);   border: 1px solid #ffd666; }
+  .layer-2 .layer-num { background: var(--gold); color: #fff; }
+  .layer-2 .layer-name { color: var(--gold); }
+
+  .layer-3 { background: var(--danger-pale); border: 1px solid #ff7875; }
+  .layer-3 .layer-num { background: var(--danger); color: #fff; }
+  .layer-3 .layer-name { color: var(--danger); }
+
+  /* ── FLOW STEPS ── */
+  .flow {
+    position: relative;
+    margin: 24px 0;
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 4px;
+    position: relative;
+  }
+
+  .flow-step-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .flow-dot {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .flow-connector {
+    width: 2px;
+    flex: 1;
+    min-height: 20px;
+    background: var(--rule);
+    margin: 2px 0;
+  }
+
+  .flow-body {
+    padding: 6px 0 20px;
+    flex: 1;
+  }
+
+  .flow-title { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+  .flow-detail { font-size: 13px; color: var(--ink-3); }
+  .flow-code {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin-top: 8px;
+    color: var(--ink-3);
+  }
+
+  .flow-dot.purple { background: #722ed1; color: #fff; }
+  .flow-dot.teal   { background: var(--teal); color: #fff; }
+  .flow-dot.amber  { background: #d46b08; color: #fff; }
+  .flow-dot.blue   { background: #1677ff; color: #fff; }
+  .flow-dot.red    { background: var(--danger); color: #fff; }
+  .flow-dot.green  { background: var(--success); color: #fff; }
+
+  /* ── VULN TABLE ── */
+  .severity-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+  }
+
+  .sev-critical { background: #fff0f6; color: #c41d7f; border: 1px solid #ffadd2; }
+  .sev-high     { background: var(--danger-pale); color: var(--danger); border: 1px solid #ffa39e; }
+  .sev-medium   { background: var(--warn-pale); color: var(--warn); border: 1px solid #ffd591; }
+
+  /* ── TIMELINE / NEXT STEPS ── */
+  .timeline {
+    margin: 24px 0;
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 12px; bottom: 0;
+    width: 2px;
+    background: var(--rule);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -28px; top: 6px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  .timeline-item.done::before { background: var(--success); box-shadow: 0 0 0 2px var(--success); }
+  .timeline-item.next::before { background: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+  .timeline-item.future::before { background: var(--rule); box-shadow: 0 0 0 2px var(--rule); }
+
+  .timeline-phase {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--ink-4);
+    margin-bottom: 4px;
+  }
+
+  .timeline-title { font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 6px; }
+  .timeline-body  { font-size: 13.5px; color: var(--ink-3); }
+
+  .timeline-tasks {
+    list-style: none;
+    margin-top: 8px;
+  }
+
+  .timeline-tasks li {
+    padding: 4px 0;
+    font-size: 13px;
+    color: var(--ink-3);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .timeline-tasks li::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── COMPARISON ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 20px 0;
+  }
+
+  .compare-col { padding: 0; }
+
+  .compare-header {
+    padding: 14px 18px;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .compare-header.ours { background: var(--ink); color: #fff; }
+  .compare-header.theirs { background: var(--paper-2); color: var(--ink-3); }
+
+  .compare-row {
+    display: contents;
+  }
+
+  .compare-cell {
+    padding: 10px 18px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    color: var(--ink-2);
+  }
+
+  .compare-cell:last-child { border-right: none; }
+  .compare-cell.feature { font-weight: 500; color: var(--ink); background: var(--paper-2); }
+  .compare-cell.yes { color: var(--success); }
+  .compare-cell.no  { color: var(--ink-4); }
+
+  /* ── QUOTE / CALLOUT HIGHLIGHT ── */
+  .highlight-quote {
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    margin: 24px 0;
+    background: var(--paper-2);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .highlight-quote p {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--ink);
+    margin: 0 0 8px;
+    line-height: 1.5;
+  }
+
+  .highlight-quote cite {
+    font-size: 12px;
+    color: var(--ink-4);
+    font-style: normal;
+    letter-spacing: .03em;
+  }
+
+  /* ── CODE BLOCK ── */
+  .code-block {
+    background: var(--ink);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+
+  .code-block .cb-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--ink-4);
+    margin-bottom: 12px;
+  }
+
+  .code-block pre {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    color: #c8c9cf;
+    white-space: pre;
+  }
+
+  .code-block .kw  { color: #ff8a65; }
+  .code-block .str { color: #95de64; }
+  .code-block .cmt { color: #4a4e5c; }
+  .code-block .fn  { color: #69b1ff; }
+  .code-block .num { color: #ffc53d; }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    background: var(--ink);
+    color: var(--ink-4);
+    padding: 24px 64px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 48px;
+  }
+
+  .page-footer a { color: #727688; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .content, .page-header, .page-footer { padding-left: 24px; padding-right: 24px; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .component-grid { grid-template-columns: 1fr; }
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo">
+      <div class="logo-icon">🛡</div>
+      <div>
+        <div class="logo-name">SecureGuard AI</div>
+        <div class="logo-sub">Internal Wiki</div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-meta">
+    <span>Version: 2.0</span>
+    <span>Status: Hackathon Build</span>
+    <span>Updated: May 2026</span>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Overview</div>
+    <a class="nav-link" href="#problem"><span class="dot"></span>Problem statement</a>
+    <a class="nav-link" href="#why-now"><span class="dot"></span>Why now</a>
+    <a class="nav-link" href="#solution"><span class="dot"></span>Our solution</a>
+    <a class="nav-link" href="#comparison"><span class="dot"></span>Market comparison</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Architecture</div>
+    <a class="nav-link" href="#hld"><span class="dot"></span>High level design</a>
+    <a class="nav-link" href="#layers"><span class="dot"></span>Enforcement layers</a>
+    <a class="nav-link" href="#domain"><span class="dot"></span>Domain model</a>
+    <a class="nav-link" href="#lld"><span class="dot"></span>Low level design</a>
+    <div class="nav-sub">
+      <a class="nav-link" href="#scanner">Scanner module</a>
+      <a class="nav-link" href="#remediator">AI remediator</a>
+      <a class="nav-link" href="#policy">Policy engine</a>
+      <a class="nav-link" href="#audit">Audit log</a>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Workflows</div>
+    <a class="nav-link" href="#flow-ide"><span class="dot"></span>IDE background scan</a>
+    <a class="nav-link" href="#flow-commit"><span class="dot"></span>Pre-commit hook</a>
+    <a class="nav-link" href="#flow-pr"><span class="dot"></span>PR gate</a>
+    <a class="nav-link" href="#flow-chat"><span class="dot"></span>Copilot Chat</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Reference</div>
+    <a class="nav-link" href="#vulns"><span class="dot"></span>Vulnerability coverage</a>
+    <a class="nav-link" href="#languages"><span class="dot"></span>Language support</a>
+    <a class="nav-link" href="#next"><span class="dot"></span>Next steps</a>
+    <a class="nav-link" href="#team"><span class="dot"></span>Team &amp; contacts</a>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="breadcrumb">
+    <a href="#">Engineering</a><span>/</span>
+    <a href="#">Security</a><span>/</span>
+    SecureGuard AI
+  </div>
+  <h1>SecureGuard <em>AI</em></h1>
+  <p class="tagline">An AI-powered security agent that detects vulnerabilities and delivers context-aware remediations directly inside the developer workflow — from first keystroke to merged PR.</p>
+  <div class="header-badges">
+    <span class="badge badge-version">v2.0 — Hackathon Build</span>
+    <span class="badge badge-status">✓ Active Development</span>
+    <span class="badge badge-lang">Python</span>
+    <span class="badge badge-lang">TypeScript</span>
+    <span class="badge badge-lang">Angular</span>
+    <span class="badge badge-lang">Java</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- ── STATS ── -->
+<div class="section" style="border-top:none; margin-top:0; padding-top:40px;">
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-num accent">9</div>
+      <div class="stat-label">Vulnerability categories detected</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num teal">4</div>
+      <div class="stat-label">Languages supported (Python, TS, Angular, Java)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num navy">4</div>
+      <div class="stat-label">Developer surfaces (IDE, commit, chat, PR)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--success)">80%</div>
+      <div class="stat-label">Estimated reduction in time to remediation</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PROBLEM STATEMENT ── -->
+<div class="section" id="problem">
+  <div class="section-label">01 — Problem statement</div>
+  <h2>Security is a delivery bottleneck</h2>
+
+  <p>Developers spend significant time identifying, understanding, and remediating security issues — work that slows delivery, reduces productivity, and often gets deferred under deadline pressure. When it gets deferred, vulnerabilities reach production.</p>
+
+  <div class="callout callout-danger">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <strong>The Mythos finding (Anthropic, April 2026)</strong>
+      <p>Anthropic's Claude Mythos model can find vulnerabilities in minutes that previously took skilled researchers months. More than 99% of the vulnerabilities it has already discovered remain unpatched. The median time from vulnerability discovery to weaponised exploit has collapsed from 771 days in 2018 to under 4 hours today.</p>
+    </div>
+  </div>
+
+  <h3>The three failure modes</h3>
+
+  <div class="component-grid">
+    <div class="component-card">
+      <div class="comp-header">
+        <div class="comp-icon red">🔍</div>
+        <div>
+          <div class="comp-name">Discovery without remediation</div>
+        </div>
+      </div>
+      <p>Scanners surface findings but developers don't know how to fix them. The finding sits in a backlog. Time to fix: days or weeks.</p>
+    </div>
+    <div class="component-card">
+      <div class="comp-header">
+        <div class="comp-icon gold">🚧</div>
+        <div>
+          <div class="comp-name">Security as a late-stage gate</div>
+        </div>
+      </div>
+      <p>Security reviews happen at the end of the cycle. Findings block release. Rework is expensive. Developers experience security as friction, not help.</p>
+    </div>
+    <div class="component-card">
+      <div class="comp-header">
+        <div class="comp-icon navy">📋</div>
+        <div>
+          <div class="comp-name">Generic fixes, not contextual ones</div>
+        </div>
+      </div>
+      <p>Existing tools generate boilerplate advice. A Java developer sees "use PreparedStatement" — but not how to apply it to their specific 40-line DAO class.</p>
+    </div>
+    <div class="component-card">
+      <div class="comp-header">
+        <div class="comp-icon red">🔓</div>
+        <div>
+          <div class="comp-name">No hard enforcement</div>
+        </div>
+      </div>
+      <p>Advisory warnings are ignored under deadline pressure. Without a policy gate that actually blocks merge, the tool is optional and inconsistently used.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── WHY NOW ── -->
+<div class="section" id="why-now">
+  <div class="section-label">02 — Why now</div>
+  <h2>Three forces converging in 2026</h2>
+
+  <div class="highlight-quote">
+    <p>"Discovery will no longer be the bottleneck. Remediation will."</p>
+    <cite>— Platform Engineering Magazine, April 2026, on the impact of AI-powered vulnerability discovery</cite>
+  </div>
+
+  <h3>Force 1: AI coding assistants increase surface area</h3>
+  <p>GitHub Copilot writes code faster than ever. Every developer in the organisation already uses it. But AI-generated code inherits the same vulnerability patterns as human-written code — and moves faster into PRs. The attack surface is growing at the speed of AI generation.</p>
+
+  <h3>Force 2: Mythos proved scale changes everything</h3>
+  <p>Traditional vulnerability management cycles span weeks. Anthropic's Mythos model finds vulnerabilities in minutes. The gap between discovery velocity and remediation velocity is now measured in orders of magnitude. Organisations that don't automate remediation will drown in findings they cannot fix fast enough.</p>
+
+  <h3>Force 3: Developers already have the workflow</h3>
+  <p>Every developer in this organisation has GitHub Copilot in VS Code. The chat panel, the PR integration, the branch protection hooks — all of it already exists. The missing piece is a security agent that plugs into that workflow and turns it into a security enforcement layer. That is what SecureGuard builds.</p>
+</div>
+
+<!-- ── SOLUTION ── -->
+<div class="section" id="solution">
+  <div class="section-label">03 — Our solution</div>
+  <h2>SecureGuard AI — what it does</h2>
+
+  <p>SecureGuard is an AI security agent that pairs every finding with an AI-generated explanation, a working code patch, and a unit test — delivered directly into the developer's existing workflow. It does not require new tools, new logins, or new dashboards.</p>
+
+  <div class="callout callout-success">
+    <div class="callout-icon">✅</div>
+    <div class="callout-body">
+      <strong>Design principle: zero new tools for developers</strong>
+      <p>SecureGuard surfaces everything through GitHub Copilot Chat (<code>@secureguard</code>), inline VS Code squiggles, git pre-commit hooks, and GitHub PR comments — surfaces developers already work in every day.</p>
+    </div>
+  </div>
+
+  <h3>The four surfaces</h3>
+  <div class="layer-stack">
+    <div class="layer layer-1">
+      <div class="layer-num">1</div>
+      <div class="layer-content">
+        <div class="layer-name">VS Code background daemon</div>
+        <div class="layer-desc">Scans on every file save. Red squiggles appear within 2 seconds. No LLM call — fast and free.</div>
+      </div>
+      <div class="layer-meta">IDE · advisory only</div>
+    </div>
+    <div class="layer layer-2">
+      <div class="layer-num">2</div>
+      <div class="layer-content">
+        <div class="layer-name">Git pre-commit hook</div>
+        <div class="layer-desc">Scans staged files on <code>git commit</code>. Blocks CRITICAL findings. Runs in 3–8 seconds. Developers can <code>--no-verify</code> to bypass (logged).</div>
+      </div>
+      <div class="layer-meta">Commit · blocks CRITICAL</div>
+    </div>
+    <div class="layer layer-3">
+      <div class="layer-num">3</div>
+      <div class="layer-content">
+        <div class="layer-name">GitHub Actions PR gate</div>
+        <div class="layer-desc">Deep scan on PR open. Posts inline AI fix suggestions. Blocks merge on HIGH/CRITICAL. Cannot be bypassed — only overridden with the <code>security-override</code> label (logged and audited).</div>
+      </div>
+      <div class="layer-meta">PR · blocks HIGH + CRITICAL</div>
+    </div>
+  </div>
+
+  <p>A fourth surface — <strong>GitHub Copilot Chat</strong> (<code>@secureguard scan this file</code>) — gives developers on-demand deep analysis with streamed AI remediations. This is where Claude does the heavy lifting: reading the actual code, understanding the context, and generating a patch that fits the existing codebase.</p>
+</div>
+
+<!-- ── COMPARISON ── -->
+<div class="section" id="comparison">
+  <div class="section-label">04 — Market comparison</div>
+  <h2>How we differ from existing tools</h2>
+
+  <div class="compare-grid">
+    <div>
+      <div class="compare-header theirs">Mythos (Anthropic)</div>
+      <div class="compare-cell">Finds vulns at world scale</div>
+      <div class="compare-cell no">✗ No fix generation</div>
+      <div class="compare-cell no">✗ Not in developer IDE</div>
+      <div class="compare-cell no">✗ Restricted access only</div>
+      <div class="compare-cell no">✗ No policy gate</div>
+    </div>
+    <div>
+      <div class="compare-header theirs">Snyk / GitHub GHAS</div>
+      <div class="compare-cell">Scans code + deps</div>
+      <div class="compare-cell no">✗ Generic fix suggestions</div>
+      <div class="compare-cell no">✗ No company-policy grounding</div>
+      <div class="compare-cell no">✗ Not Copilot-native</div>
+      <div class="compare-cell">△ PR alerts (no merge block)</div>
+    </div>
+    <div>
+      <div class="compare-header ours">SecureGuard AI ← us</div>
+      <div class="compare-cell">Detects in 4 languages</div>
+      <div class="compare-cell yes">✓ AI fix + test stub</div>
+      <div class="compare-cell yes">✓ Context-aware (reads your code)</div>
+      <div class="compare-cell yes">✓ Copilot-native, zero new tools</div>
+      <div class="compare-cell yes">✓ Hard merge gate + audit trail</div>
+    </div>
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body">
+      <strong>The gap SecureGuard fills</strong>
+      <p>Mythos finds vulnerabilities at scale. Claude Code writes great code. Neither remediates security issues in the developer workflow with company-policy grounding and a hard enforcement gate. SecureGuard is that bridge.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── HIGH LEVEL DESIGN ── -->
+<div class="section" id="hld">
+  <div class="section-label">05 — Architecture</div>
+  <h2>High level design</h2>
+
+  <p>SecureGuard is a <strong>single Express service</strong> that all four surfaces call. The router decides whether to invoke Claude (LLM path: Copilot Chat + PR gate) or return scanner results directly (no-LLM path: IDE + pre-commit). This keeps IDE scanning under 2 seconds and eliminates unnecessary API costs.</p>
+
+  <div class="arch-diagram">
+    <div class="arch-title">System overview — three zones</div>
+    <pre>
+<span class="muted">┌─────────────────────────────────────────────────────────────────┐</span>
+<span class="muted">│</span>  <span class="gold">DEVELOPER ZONE</span>                                                 <span class="muted">│</span>
+<span class="muted">│</span>                                                                 <span class="muted">│</span>
+<span class="muted">│</span>  <span class="blue">VS Code + Copilot</span>   <span class="blue">Pre-commit hook</span>   <span class="blue">@secureguard</span>   <span class="blue">GitHub PR</span>  <span class="muted">│</span>
+<span class="muted">│</span>  <span class="muted">IDE squiggles</span>       <span class="muted">git commit</span>        <span class="muted">Copilot Chat</span>   <span class="muted">Actions bot</span><span class="muted">│</span>
+<span class="muted">└────────────┬────────────────┬──────────────┬──────────────┬────┘</span>
+             │                │              │              │
+             <span class="muted">▼</span>                <span class="muted">▼</span>              <span class="muted">▼</span>              <span class="muted">▼</span>
+<span class="muted">┌─────────────────────────────────────────────────────────────────┐</span>
+<span class="muted">│</span>  <span class="teal">SECUREGUARD PLATFORM</span>  (single Node.js / Express service)       <span class="muted">│</span>
+<span class="muted">│</span>                                                                 <span class="muted">│</span>
+<span class="muted">│</span>  Language Detector  →  Request Router                          <span class="muted">│</span>
+<span class="muted">│</span>                         <span class="muted">├── /scan    →</span> <span class="gold">Scanner only</span>  <span class="muted">(no LLM)</span>   <span class="muted">│</span>
+<span class="muted">│</span>                         <span class="muted">├── /copilot →</span> <span class="red">Scanner + Claude</span> <span class="muted">(stream)</span>  <span class="muted">│</span>
+<span class="muted">│</span>                         <span class="muted">└── /pr     →</span> <span class="red">Scanner + Claude</span> <span class="muted">(batch)</span>   <span class="muted">│</span>
+<span class="muted">│</span>                                                                 <span class="muted">│</span>
+<span class="muted">│</span>  <span class="gold">Scanner</span>         <span class="gold">Normalizer</span>      <span class="red">AI Remediator</span>  <span class="teal">Policy Engine</span> <span class="muted">│</span>
+<span class="muted">│</span>  <span class="muted">Semgrep</span>          <span class="muted">RawFinding[]  → Claude API</span>      <span class="muted">BLOCK/PASS</span>    <span class="muted">│</span>
+<span class="muted">│</span>  <span class="muted">Gitleaks</span>         <span class="muted">→ Finding[]</span>     <span class="muted">Explanation</span>    <span class="muted">GitHub status</span> <span class="muted">│</span>
+<span class="muted">│</span>  <span class="muted">SpotBugs (Java)</span>                  <span class="muted">Patch + Test</span>                   <span class="muted">│</span>
+<span class="muted">│</span>                                                                 <span class="muted">│</span>
+<span class="muted">│</span>  <span class="teal">Remediator Registry</span>                      <span class="teal">Audit Log (SQLite)</span>    <span class="muted">│</span>
+<span class="muted">│</span>  <span class="muted">9 CWEs · OWASP · company policy</span>          <span class="muted">Every scan recorded</span>   <span class="muted">│</span>
+<span class="muted">└─────────────────────────────────────────────────────────────────┘</span>
+             │                │              │              │
+<span class="muted">┌─────────────────────────────────────────────────────────────────┐</span>
+<span class="muted">│</span>  <span class="blue">EXTERNAL DEPENDENCIES</span>                                          <span class="muted">│</span>
+<span class="muted">│</span>  <span class="muted">Semgrep</span>  <span class="muted">Gitleaks</span>  <span class="muted">Bandit</span>  <span class="muted">SpotBugs</span>  <span class="muted">Claude API</span>  <span class="muted">GitHub API</span>  <span class="muted">│</span>
+<span class="muted">└─────────────────────────────────────────────────────────────────┘</span></pre>
+  </div>
+
+  <h3>The critical routing decision</h3>
+  <p>The single most important architectural choice: <strong>Claude is only called on <code>/copilot</code> and <code>/pr</code> routes</strong>. The IDE daemon and pre-commit hook use Semgrep and Gitleaks directly — no API call, no latency, no cost. This keeps file-save scanning under 2 seconds and commit hooks under 8 seconds. Java's SpotBugs compile step runs only on full-mode scans (PR/Copilot) — never on file save.</p>
+</div>
+
+<!-- ── ENFORCEMENT LAYERS ── -->
+<div class="section" id="layers">
+  <div class="section-label">06 — Enforcement</div>
+  <h2>Three enforcement layers</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Trigger</th>
+        <th>Scope</th>
+        <th>Tools</th>
+        <th>Speed</th>
+        <th>Blocks on</th>
+        <th>Bypassable?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1 — IDE daemon</strong></td>
+        <td>File save</td>
+        <td>Open file only</td>
+        <td>Semgrep fast · Gitleaks</td>
+        <td>1–2 sec</td>
+        <td>Nothing — advisory</td>
+        <td>N/A</td>
+      </tr>
+      <tr>
+        <td><strong>2 — Pre-commit</strong></td>
+        <td><code>git commit</code></td>
+        <td>Staged files only</td>
+        <td>Semgrep · Gitleaks · audits</td>
+        <td>3–8 sec</td>
+        <td>CRITICAL severity</td>
+        <td>Yes — <code>--no-verify</code> (logged)</td>
+      </tr>
+      <tr>
+        <td><strong>3 — PR gate</strong></td>
+        <td>PR open / push</td>
+        <td>All changed files · full dep tree</td>
+        <td>Semgrep full · SpotBugs · OWASP DC</td>
+        <td>30–90 sec</td>
+        <td>HIGH + CRITICAL</td>
+        <td>No — <code>security-override</code> label only (audited)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-warn">
+    <div class="callout-icon">📌</div>
+    <div class="callout-body">
+      <strong>Running the same check twice is by design — not duplication</strong>
+      <p>Layer 1 runs fast, lightweight rules on every save — running full Semgrep rulesets on save would make VS Code sluggish. Layer 3 runs Semgrep's full 3,000+ rule set, cross-file dataflow analysis, SpotBugs bytecode analysis, and OWASP Dependency-Check — none of which is feasible on a 2-second budget. These are complementary, not redundant.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── DOMAIN MODEL ── -->
+<div class="section" id="domain">
+  <div class="section-label">07 — Data model</div>
+  <h2>Core domain objects</h2>
+
+  <p>Five domain objects flow through the system. Understanding these makes every component's purpose obvious.</p>
+
+  <table>
+    <thead>
+      <tr><th>Object</th><th>Created by</th><th>Key fields</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>ScanRequest</strong></td>
+        <td>Router on incoming HTTP</td>
+        <td><code>requestId</code>, <code>filePaths</code>, <code>source</code>, <code>scanMode</code>, <code>language</code></td>
+        <td>Describes what to scan and from which surface</td>
+      </tr>
+      <tr>
+        <td><strong>RawFinding</strong></td>
+        <td>Scanner subprocess output</td>
+        <td><code>ruleId</code>, <code>filePath</code>, <code>lineStart</code>, <code>snippet</code>, <code>scanner</code></td>
+        <td>Raw output from Semgrep / SpotBugs / Gitleaks before normalisation</td>
+      </tr>
+      <tr>
+        <td><strong>Finding</strong></td>
+        <td>Normalizer from RawFinding[]</td>
+        <td><code>findingId</code>, <code>cweId</code>, <code>severity</code>, <code>language</code>, <code>snippet</code> (max 500 chars)</td>
+        <td>Canonical, deduplicated, CWE-mapped security finding</td>
+      </tr>
+      <tr>
+        <td><strong>RegistryEntry</strong></td>
+        <td>Loaded from <code>remediator-registry.json</code></td>
+        <td><code>cweId</code>, <code>owaspRef</code>, <code>guidance</code>, <code>fixTemplate</code>, <code>languages[]</code></td>
+        <td>Company-grounded remediation knowledge for each CWE</td>
+      </tr>
+      <tr>
+        <td><strong>Remediation</strong></td>
+        <td>Claude API via remediator.ts</td>
+        <td><code>explanation</code>, <code>patch</code>, <code>testStub</code>, <code>promptTokens</code>, <code>latencyMs</code></td>
+        <td>AI-generated fix in the correct language with test</td>
+      </tr>
+      <tr>
+        <td><strong>PolicyResult</strong></td>
+        <td>Policy engine from Finding[]</td>
+        <td><code>decision</code> (PASS/BLOCK/OVERRIDE), <code>blockedFindings</code>, <code>overrideApprover</code></td>
+        <td>Whether the PR is allowed to merge</td>
+      </tr>
+      <tr>
+        <td><strong>AuditRecord</strong></td>
+        <td>Audit.ts after every scan</td>
+        <td><code>source</code>, <code>language</code>, <code>findingsBySeverity</code>, <code>llmCalled</code>, <code>policyResult</code></td>
+        <td>Immutable record of every scan for compliance and metrics</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ── LOW LEVEL DESIGN ── -->
+<div class="section" id="lld">
+  <div class="section-label">08 — Low level design</div>
+  <h2>Component internals</h2>
+
+  <p>The core service is structured as a set of single-responsibility modules, each independently testable. Here is the responsibility and interface of every module.</p>
+
+  <div id="scanner">
+    <h3>Scanner module — <code>scanner.ts</code></h3>
+    <p>Manages all scanner subprocess invocations. Uses <code>child_process.spawn</code> (never <code>exec</code>) with args as arrays to prevent shell injection. Every scanner runs with a timeout enforced via <code>Promise.race</code>.</p>
+
+    <table>
+      <thead><tr><th>Method</th><th>Language</th><th>Mode</th><th>Tool</th><th>Timeout</th></tr></thead>
+      <tbody>
+        <tr><td><code>runSemgrep()</code></td><td>All</td><td>Fast + Full</td><td>Semgrep</td><td>30s</td></tr>
+        <tr><td><code>runGitleaks()</code></td><td>All</td><td>Fast + Full</td><td>Gitleaks</td><td>15s</td></tr>
+        <tr><td><code>runBandit()</code></td><td>Python</td><td>Fast + Full</td><td>Bandit</td><td>20s</td></tr>
+        <tr><td><code>runNpmAudit()</code></td><td>JS/TS/Angular</td><td>Fast + Full</td><td>npm audit</td><td>20s</td></tr>
+        <tr><td><code>runPipAudit()</code></td><td>Python</td><td>Fast + Full</td><td>pip-audit</td><td>20s</td></tr>
+        <tr><td><code>runSpotBugs()</code></td><td>Java</td><td><strong>Full only</strong></td><td>Maven compile + SpotBugs</td><td>120s compile + 60s scan</td></tr>
+        <tr><td><code>runOwaspDependencyCheck()</code></td><td>Java</td><td><strong>Full only</strong></td><td>OWASP Dep-Check</td><td>180s</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warn">
+      <div class="callout-icon">⚙️</div>
+      <div class="callout-body">
+        <strong>Java fast-mode caveat</strong>
+        <p>SpotBugs requires compiled bytecode. On file save in VS Code, the IDE daemon skips SpotBugs and shows a hint: "Run <code>mvn compile</code> for Java bytecode analysis." Semgrep still runs in fast mode and catches the most common patterns (SQL injection, hardcoded secrets, XXE).</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="remediator">
+    <h3>AI remediator — <code>remediator.ts</code></h3>
+    <p>Builds a language-aware prompt, calls Claude Sonnet 4.6, and parses the structured XML response (<code>&lt;explanation&gt;</code>, <code>&lt;patch&gt;</code>, <code>&lt;test&gt;</code>) into a <code>Remediation</code> object.</p>
+
+    <div class="code-block">
+      <div class="cb-label">Claude prompt structure (language = Java)</div>
+      <pre><span class="kw">You are SecureGuard AI, an expert in Java application security.</span>
+
+<span class="kw">VULNERABILITY:</span> SQL Injection (CWE-89) · CRITICAL · A03:2021
+<span class="kw">FILE:</span> UserController.java, Line 14
+<span class="kw">LANGUAGE:</span> Java
+
+<span class="kw">VULNERABLE CODE:</span>
+<span class="str">stmt.executeQuery("SELECT * FROM users WHERE id = " + userId)</span>
+
+<span class="kw">COMPANY GUIDANCE:</span>
+<span class="cmt">Use PreparedStatement or JPA named parameters. Never concatenate
+user input. Apply least-privilege to DB accounts.</span>
+
+<span class="kw">JAVA FIX NOTE:</span>
+<span class="cmt">Include full import statements. Show complete method, not just
+the changed line. If Spring Security config changes are needed,
+show the SecurityConfig snippet.</span>
+
+<span class="kw">Respond with:</span>
+<span class="fn">&lt;explanation&gt;</span>Plain English — 2-4 sentences<span class="fn">&lt;/explanation&gt;</span>
+<span class="fn">&lt;patch&gt;</span>Fixed Java code with imports<span class="fn">&lt;/patch&gt;</span>
+<span class="fn">&lt;test&gt;</span>JUnit 5 + Mockito test<span class="fn">&lt;/test&gt;</span></pre>
+    </div>
+
+    <p>The remediator runs up to <strong>5 concurrent Claude API calls</strong> per PR scan. Failures are logged at WARN and skipped — partial results are returned rather than failing the entire scan. Streaming is used for Copilot Chat responses; batch for PR comments.</p>
+  </div>
+
+  <div id="policy">
+    <h3>Policy engine — <code>policy.ts</code></h3>
+    <p>Evaluates <code>Finding[]</code> against configurable rules and calls the GitHub Statuses API to set the PR gate.</p>
+
+    <table>
+      <thead><tr><th>Decision</th><th>Condition</th><th>GitHub status</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>PASS</code></td><td>No HIGH or CRITICAL findings</td><td>success</td><td>Merge button enabled</td></tr>
+        <tr><td><code>BLOCK</code></td><td>Any HIGH or CRITICAL finding unresolved</td><td>failure</td><td>Merge button grayed out</td></tr>
+        <tr><td><code>OVERRIDE</code></td><td>BLOCK conditions met + <code>security-override</code> label present</td><td>success</td><td>Merge allowed; override recorded in audit log with approver name</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="audit">
+    <h3>Audit log — <code>audit.ts</code></h3>
+    <p>Every scan writes an <code>AuditRecord</code> to SQLite (production: Postgres). The audit module never throws — audit failure must not break the main scan flow. Records are immutable once written.</p>
+
+    <p>Key queries the security team can run:</p>
+    <div class="code-block">
+      <div class="cb-label">SQLite — most common vulnerabilities by language</div>
+      <pre><span class="kw">SELECT</span> f.language, f.cwe_id, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> count
+<span class="kw">FROM</span> findings f
+<span class="kw">GROUP BY</span> f.language, f.cwe_id
+<span class="kw">ORDER BY</span> count <span class="kw">DESC</span>;</pre>
+    </div>
+
+    <div class="code-block">
+      <div class="cb-label">SQLite — override rate by team (repo prefix)</div>
+      <pre><span class="kw">SELECT</span>
+  <span class="fn">SUBSTR</span>(repo_path, <span class="num">1</span>, <span class="num">30</span>) <span class="kw">AS</span> team,
+  <span class="fn">SUM</span>(policy_decision = <span class="str">'OVERRIDE'</span>) * <span class="num">1.0</span> / <span class="fn">COUNT</span>(*) <span class="kw">AS</span> override_rate
+<span class="kw">FROM</span> audit_records
+<span class="kw">WHERE</span> created_at > datetime(<span class="str">'now'</span>, <span class="str">'-30 days'</span>)
+<span class="kw">GROUP BY</span> team
+<span class="kw">ORDER BY</span> override_rate <span class="kw">DESC</span>;</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ── WORKFLOWS ── -->
+<div class="section" id="flow-ide">
+  <div class="section-label">09 — Workflows</div>
+  <h2>Flow 1 — IDE background scan</h2>
+  <p>Triggered on every file save. Completes in under 2 seconds. No developer action required.</p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot purple">1</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">Developer saves file in VS Code</div>
+        <div class="flow-detail">LSP client fires <code>onDidSave</code>. Extracts file path and language.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot teal">2</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">POST /scan to localhost:3000</div>
+        <div class="flow-detail">source: "ide", scanMode: "fast". Router receives request, detects language.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot amber">3</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">Scanner runs Semgrep fast rules + Gitleaks</div>
+        <div class="flow-detail">Subprocess with timeout 8s. Java: Semgrep only (no SpotBugs compile on save).</div>
+        <div class="flow-code">timeout: 8s · no LLM called · partial results if timeout</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot blue">4</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">Normalizer maps RawFinding[] → Finding[]</div>
+        <div class="flow-detail">Dedup by (filePath + lineStart + cweId). Drop LOW severity in fast mode.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot green">5</div></div>
+      <div class="flow-body">
+        <div class="flow-title">LSP formatter returns Diagnostic[] → VS Code squiggles</div>
+        <div class="flow-detail">CRITICAL/HIGH → red underline. MEDIUM → yellow. Problems panel updated. Hover shows CWE + one-line hint.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="flow-commit">
+  <h2>Flow 2 — Pre-commit hook</h2>
+  <p>Triggered by <code>git commit</code>. Scans staged files only. Fast enough not to feel like a tax on every commit.</p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot purple">1</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">Developer runs <code>git commit</code></div>
+        <div class="flow-detail">Husky pre-commit hook fires. Runs <code>secureguard scan --staged --fail-on CRITICAL</code></div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot amber">2</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">Scanner runs on staged files</div>
+        <div class="flow-detail">Semgrep fast + Gitleaks + npm/pip audit. Java: Semgrep only. Total: 3–8 seconds.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot red">3</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">Decision: CRITICAL found?</div>
+        <div class="flow-detail">No CRITICAL → exit 0 → commit proceeds. MEDIUM/LOW → print warning, commit proceeds. CRITICAL → exit 1 → commit blocked.</div>
+        <div class="flow-code">exit code 1 blocks git commit · --no-verify bypasses (logged in audit)</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot green">4</div></div>
+      <div class="flow-body">
+        <div class="flow-title">CLI prints colored finding + hint</div>
+        <div class="flow-detail">CWE ID, file, line, one-line guidance from registry. "Run <code>@secureguard explain &lt;id&gt;</code> for AI fix."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="flow-pr">
+  <h2>Flow 3 — PR gate (GitHub Actions)</h2>
+  <p>Triggered on PR open or new push. Full deep scan. Cannot be bypassed without the override label.</p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot purple">1</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">PR opened or new commit pushed</div>
+        <div class="flow-detail">GitHub Actions fires on <code>pull_request</code> event. Runner has Semgrep, Gitleaks, SpotBugs, OWASP DC installed.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot amber">2</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">Full deep scan on all changed files</div>
+        <div class="flow-detail">Java repos: Maven compile → SpotBugs → OWASP Dep-Check. All: Semgrep full ruleset + Gitleaks. Timeout: 90s Semgrep, 180s Dep-Check.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot blue">3</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">Claude generates remediations for HIGH/CRITICAL</div>
+        <div class="flow-detail">Up to 5 concurrent API calls. Language-aware prompts. Java: includes import statements. Angular: includes TS + HTML split.</div>
+        <div class="flow-code">model: claude-sonnet-4-6 · max_tokens: 1500 · stream: false</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot teal">4</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">PR review comments posted via GitHub Suggestions API</div>
+        <div class="flow-detail">One comment per finding. Includes explanation, diff suggestion (one-click apply), OWASP reference link.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot red">5</div><div class="flow-connector"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">Policy gate sets commit status</div>
+        <div class="flow-detail">HIGH/CRITICAL unresolved → <code>failure</code> status → merge button grayed out. Override label present → <code>success</code> with override note in audit.</div>
+        <div class="flow-code">context: 'secureguard/policy-gate' · required in branch protection rules</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-line"><div class="flow-dot green">6</div></div>
+      <div class="flow-body">
+        <div class="flow-title">Developer applies fix → re-push → gate passes → merge</div>
+        <div class="flow-detail">Each re-push re-triggers the full scan. Audit record written after every run.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="flow-chat">
+  <h2>Flow 4 — Copilot Chat (<code>@secureguard</code>)</h2>
+  <p>On-demand deep analysis with streamed AI remediations. This is the highest-value surface for developer understanding.</p>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">💬</div>
+    <div class="callout-body">
+      <strong>Supported Copilot Chat commands</strong>
+      <p><code>@secureguard scan this file</code> · <code>@secureguard scan repo</code> · <code>@secureguard what's vulnerable here?</code> · <code>@secureguard fix the XXE in XmlParser.java</code> · <code>@secureguard /explain &lt;findingId&gt;</code></p>
+    </div>
+  </div>
+
+  <p>The Copilot Extension server (running on localhost:3000 or a deployed URL) receives the developer's message, runs the appropriate scanner, calls Claude with the full code context and registry guidance, and streams the response back as GitHub Flavored Markdown — severity badge → plain-English explanation → fixed code (language-correct fences) → unit test → OWASP reference.</p>
+
+  <p>For Angular findings that span both TypeScript component and HTML template, the response includes two separate labeled code blocks. For Java, the response always includes the necessary import statements.</p>
+</div>
+
+<!-- ── VULNERABILITY COVERAGE ── -->
+<div class="section" id="vulns">
+  <div class="section-label">10 — Coverage</div>
+  <h2>Vulnerability categories</h2>
+
+  <table>
+    <thead>
+      <tr><th>#</th><th>CWE</th><th>Name</th><th>OWASP</th><th>Severity</th><th>Languages</th><th>Scanner</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td><td><code>CWE-89</code></td><td>SQL Injection</td><td>A03:2021</td>
+        <td><span class="severity-badge sev-critical">CRITICAL</span></td>
+        <td>All</td><td>Semgrep + SpotBugs</td>
+      </tr>
+      <tr>
+        <td>2</td><td><code>CWE-798</code></td><td>Hardcoded credentials</td><td>A02:2021</td>
+        <td><span class="severity-badge sev-critical">CRITICAL</span></td>
+        <td>All</td><td>Semgrep + Gitleaks + SpotBugs</td>
+      </tr>
+      <tr>
+        <td>3</td><td><code>CWE-287</code></td><td>Broken authentication (weak JWT)</td><td>A07:2021</td>
+        <td><span class="severity-badge sev-high">HIGH</span></td>
+        <td>All</td><td>Semgrep</td>
+      </tr>
+      <tr>
+        <td>4</td><td><code>CWE-937</code></td><td>Vulnerable dependency</td><td>A06:2021</td>
+        <td><span class="severity-badge sev-high">HIGH</span></td>
+        <td>All</td><td>npm audit · pip-audit · OWASP DC</td>
+      </tr>
+      <tr>
+        <td>5</td><td><code>CWE-79</code></td><td>Cross-site scripting (XSS)</td><td>A03:2021</td>
+        <td><span class="severity-badge sev-high">HIGH</span></td>
+        <td>All</td><td>Semgrep + SpotBugs</td>
+      </tr>
+      <tr style="background: rgba(0,109,117,.03);">
+        <td>6</td><td><code>CWE-79</code></td><td>Angular XSS bypass (<code>bypassSecurityTrustHtml</code>)</td><td>A03:2021</td>
+        <td><span class="severity-badge sev-critical">CRITICAL</span></td>
+        <td>Angular</td><td>Semgrep custom rules</td>
+      </tr>
+      <tr style="background: rgba(0,109,117,.03);">
+        <td>7</td><td><code>CWE-352</code></td><td>CSRF — missing Angular HttpClientXsrfModule</td><td>A01:2021</td>
+        <td><span class="severity-badge sev-high">HIGH</span></td>
+        <td>Angular · Java</td><td>Semgrep custom rules</td>
+      </tr>
+      <tr style="background: rgba(29,53,87,.04);">
+        <td>8</td><td><code>CWE-611</code></td><td>XML External Entity (XXE)</td><td>A05:2021</td>
+        <td><span class="severity-badge sev-high">HIGH</span></td>
+        <td>Java · Python</td><td>Semgrep + SpotBugs</td>
+      </tr>
+      <tr style="background: rgba(29,53,87,.04);">
+        <td>9</td><td><code>CWE-502</code></td><td>Insecure deserialization (<code>ObjectInputStream</code>)</td><td>A08:2021</td>
+        <td><span class="severity-badge sev-critical">CRITICAL</span></td>
+        <td>Java</td><td>Semgrep + SpotBugs</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Rows in teal highlight Angular-specific categories. Rows in navy highlight Java-specific categories. The remediator registry contains company-policy guidance for every row, with language-specific fix templates and references.</p>
+</div>
+
+<!-- ── LANGUAGE SUPPORT ── -->
+<div class="section" id="languages">
+  <div class="section-label">11 — Language support</div>
+  <h2>Supported languages</h2>
+
+  <table>
+    <thead>
+      <tr><th>Language</th><th>Detection</th><th>SAST Scanner</th><th>Dep scanner</th><th>IDE speed</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Python</strong></td>
+        <td><code>.py</code> extension</td>
+        <td>Semgrep + Bandit</td>
+        <td>pip-audit</td>
+        <td>1–2 sec</td>
+        <td><span class="severity-badge" style="background:var(--success-pale);color:var(--success);border:1px solid #b7eb8f">✓ Ready</span></td>
+      </tr>
+      <tr>
+        <td><strong>TypeScript / JS</strong></td>
+        <td><code>.ts .tsx .js .jsx</code></td>
+        <td>Semgrep</td>
+        <td>npm audit</td>
+        <td>1–2 sec</td>
+        <td><span class="severity-badge" style="background:var(--success-pale);color:var(--success);border:1px solid #b7eb8f">✓ Ready</span></td>
+      </tr>
+      <tr>
+        <td><strong>Angular</strong></td>
+        <td><code>*.component.ts</code> or <code>angular.json</code></td>
+        <td>Semgrep + Angular rules</td>
+        <td>npm audit</td>
+        <td>1–2 sec</td>
+        <td><span class="severity-badge" style="background:var(--success-pale);color:var(--success);border:1px solid #b7eb8f">✓ Ready</span></td>
+      </tr>
+      <tr>
+        <td><strong>Java</strong></td>
+        <td><code>.java</code> or <code>pom.xml</code></td>
+        <td>Semgrep + SpotBugs*</td>
+        <td>OWASP Dep-Check</td>
+        <td>Semgrep only (no compile)</td>
+        <td><span class="severity-badge" style="background:var(--success-pale);color:var(--success);border:1px solid #b7eb8f">✓ Ready</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>* SpotBugs requires compiled bytecode and runs in <strong>full mode only</strong> (PR gate + Copilot Chat deep scan). Maven compile runs automatically on the GitHub Actions runner before SpotBugs. If compile fails, a <code>JavaBuildError</code> is returned with a clear message — it does not crash the scan.</p>
+
+  <h3>Adding a new language in the future</h3>
+  <p>The architecture is language-agnostic at the core. Adding a new language requires exactly three things:</p>
+  <ol style="margin: 12px 0 0 20px; color: var(--ink-2);">
+    <li style="margin-bottom: 8px;">Add a scanner method in <code>scanner.ts</code> (e.g. <code>runGosec()</code> for Go)</li>
+    <li style="margin-bottom: 8px;">Add Semgrep YAML rules to <code>semgrep-rules/</code></li>
+    <li style="margin-bottom: 8px;">Add CWE entries to <code>remediator-registry.json</code> with language-specific guidance</li>
+  </ol>
+  <p>Nothing else changes — the server, router, policy engine, audit log, and all formatters work unchanged.</p>
+</div>
+
+<!-- ── NEXT STEPS ── -->
+<div class="section" id="next">
+  <div class="section-label">12 — Roadmap</div>
+  <h2>Next steps</h2>
+
+  <div class="timeline">
+
+    <div class="timeline-item done">
+      <div class="timeline-phase">Hackathon — Week 1</div>
+      <div class="timeline-title">Core MVP build</div>
+      <div class="timeline-body">
+        <ul class="timeline-tasks">
+          <li>Express service with all four routes</li>
+          <li>Semgrep + Gitleaks + SpotBugs scanner integration</li>
+          <li>Claude Sonnet 4.6 remediator with XML parsing</li>
+          <li>Remediator registry with 9 CWE entries (5 core + 2 Angular + 2 Java)</li>
+          <li>VS Code LSP extension + Copilot Chat handler</li>
+          <li>GitHub Actions PR gate with policy engine</li>
+          <li>SQLite audit log</li>
+          <li>Demo app: vulnerable Python, TypeScript, Angular, Java files</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item next">
+      <div class="timeline-phase">Post-hackathon — Month 1</div>
+      <div class="timeline-title">Production hardening</div>
+      <div class="timeline-body">
+        <ul class="timeline-tasks">
+          <li>Migrate SQLite → PostgreSQL, deploy on Azure App Service</li>
+          <li>Route all Claude API calls through Azure API Management (audit + rate limiting)</li>
+          <li>Add GitHub App auth (replace shared token with per-installation tokens)</li>
+          <li>Onboard first pilot team (2–3 repos, measure time-to-remediation)</li>
+          <li>Add Slack notification on BLOCK events to security team channel</li>
+          <li>Build metrics dashboard off audit log (override rate, bypass rate, fix time)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item next">
+      <div class="timeline-phase">Month 2–3</div>
+      <div class="timeline-title">Coverage expansion</div>
+      <div class="timeline-body">
+        <ul class="timeline-tasks">
+          <li>Add Go support: <code>gosec</code> scanner + Go registry entries</li>
+          <li>Add C# support: Semgrep C# + Roslyn analyser</li>
+          <li>Expand to 15 CWE categories (add Path Traversal CWE-22, SSRF CWE-918, Open Redirect CWE-601)</li>
+          <li>Custom Fidelity/company Semgrep rules for internal framework patterns</li>
+          <li>React-specific rule set expansion (CSP enforcement, prop sanitisation)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item future">
+      <div class="timeline-phase">Quarter 2</div>
+      <div class="timeline-title">Enterprise scale</div>
+      <div class="timeline-body">
+        <ul class="timeline-tasks">
+          <li>Multi-tenant org support — per-team policy configuration</li>
+          <li>Integrate with Jira: auto-create security ticket per BLOCK event</li>
+          <li>Security training recommendations based on team's recurring finding patterns</li>
+          <li>Agentic mode: Claude autonomously opens fix PRs for simple vulnerability patterns</li>
+          <li>SARIF output format for integration with GitHub Security tab and Defect Dojo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item future">
+      <div class="timeline-phase">Future</div>
+      <div class="timeline-title">AI-driven proactive security</div>
+      <div class="timeline-body">
+        <ul class="timeline-tasks">
+          <li>Threat modelling agent: analyse PR diffs for design-level security issues (not just code patterns)</li>
+          <li>Integrate with Mythos (Project Glasswing) findings as a feed into the remediator</li>
+          <li>Automated pen-test orchestration for API endpoints detected in changed files</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── TEAM ── -->
+<div class="section" id="team">
+  <div class="section-label">13 — Team</div>
+  <h2>Team &amp; contacts</h2>
+
+  <table>
+    <thead>
+      <tr><th>Role</th><th>Responsibility</th><th>Contact</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Tech Lead</strong></td>
+        <td>Architecture decisions, Claude API integration, remediator module</td>
+        <td>Update with team name</td>
+      </tr>
+      <tr>
+        <td><strong>Backend Dev</strong></td>
+        <td>Scanner module (SpotBugs, OWASP DC), normalizer, audit log</td>
+        <td>Update with team name</td>
+      </tr>
+      <tr>
+        <td><strong>Frontend Dev</strong></td>
+        <td>VS Code extension, Copilot Chat handler, CLI</td>
+        <td>Update with team name</td>
+      </tr>
+      <tr>
+        <td><strong>Security SME</strong></td>
+        <td>Remediator registry content, Semgrep rule authoring, policy rules</td>
+        <td>Update with team name</td>
+      </tr>
+      <tr>
+        <td><strong>DevOps</strong></td>
+        <td>GitHub Actions workflow, Docker, production deployment</td>
+        <td>Update with team name</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">📁</div>
+    <div class="callout-body">
+      <strong>Key resources</strong>
+      <p>
+        Source repo: <code>github.com/your-org/secureguard</code> ·
+        Hackathon master build prompt: in repo root as <code>AGENT-PROMPT.md</code> ·
+        Registry file: <code>packages/core/remediator-registry.json</code> ·
+        Demo app: <code>demo-app/</code> folder ·
+        Audit DB: <code>secureguard.db</code> (local) or Azure Postgres (prod)
+      </p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<!-- PAGE FOOTER -->
+<div class="page-footer">
+  <div>SecureGuard AI · Internal Engineering Documentation · Confidential</div>
+  <div>Last updated May 2026 · v2.0 · <a href="#">Edit this page</a></div>
+</div>
+
+</main>
+</div><!-- /layout -->
+
+<script>
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(section => observer.observe(section));
+</script>
+
+</body>
+</html>
