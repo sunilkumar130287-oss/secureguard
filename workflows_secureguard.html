@@ -1,0 +1,86 @@
+
+<style>
+.wf-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.wf-tab{padding:6px 14px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;font-size:13px;color:var(--color-text-secondary);transition:all .15s}
+.wf-tab.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary)}
+.wf-panel{display:none}.wf-panel.active{display:block}
+.step-row{display:flex;gap:0;margin-bottom:2px;align-items:stretch}
+.step-num{width:32px;min-width:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--color-text-tertiary)}
+.step-line{width:2px;background:var(--color-border-tertiary);margin:0 10px;flex-shrink:0}
+.step-box{flex:1;padding:10px 14px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);margin-bottom:6px}
+.step-box.purple{border-color:#7F77DD;background:#EEEDFE}
+.step-box.teal{border-color:#1D9E75;background:#E1F5EE}
+.step-box.amber{border-color:#BA7517;background:#FAEEDA}
+.step-box.blue{border-color:#185FA5;background:#E6F1FB}
+.step-box.red{border-color:#A32D2D;background:#FCEBEB}
+.step-box.green{border-color:#3B6D11;background:#EAF3DE}
+.step-box.gray{border-color:var(--color-border-secondary);background:var(--color-background-secondary)}
+.step-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 2px}
+.step-detail{font-size:12px;color:var(--color-text-secondary);margin:0}
+.step-code{font-size:11px;font-family:var(--font-mono);color:var(--color-text-secondary);background:var(--color-background-tertiary);padding:3px 6px;border-radius:4px;margin-top:4px;display:inline-block}
+.decision{border-style:dashed;border-width:0.5px}
+@media(prefers-color-scheme:dark){
+.step-box.purple{background:#26215C;border-color:#7F77DD}
+.step-box.teal{background:#04342C;border-color:#1D9E75}
+.step-box.amber{background:#412402;border-color:#BA7517}
+.step-box.blue{background:#042C53;border-color:#185FA5}
+.step-box.red{background:#501313;border-color:#A32D2D}
+.step-box.green{background:#173404;border-color:#3B6D11}
+}
+</style>
+
+<h2 class="sr-only">SecureGuard AI — four key developer workflows shown as step-by-step flows</h2>
+
+<div class="wf-tabs">
+  <button class="wf-tab active" onclick="showTab('ide')">Flow 1 — IDE background</button>
+  <button class="wf-tab" onclick="showTab('commit')">Flow 2 — Pre-commit</button>
+  <button class="wf-tab" onclick="showTab('pr')">Flow 3 — PR gate</button>
+  <button class="wf-tab" onclick="showTab('chat')">Flow 4 — Copilot Chat</button>
+</div>
+
+<div id="tab-ide" class="wf-panel active">
+  <div class="step-row"><div class="step-num">1</div><div class="step-box purple"><p class="step-title">Developer saves file in VS Code</p><p class="step-detail">LSP client detects onDidSave event, extracts filePath + language</p><div class="step-code">event: { uri: 'file:///src/routes/users.py', languageId: 'python' }</div></div></div>
+  <div class="step-row"><div class="step-num">2</div><div class="step-box gray"><p class="step-title">LSP client calls POST /scan</p><p class="step-detail">HTTP to localhost:3000, body: { filePaths, scanMode: 'fast', source: 'ide' }</p><div class="step-code">latency target: &lt;100ms to respond, scan runs async</div></div></div>
+  <div class="step-row"><div class="step-num">3</div><div class="step-box amber"><p class="step-title">scanner.ts runs Semgrep fast rules</p><p class="step-detail">Subprocess: semgrep --config p/python --json filePath. Gitleaks on same file.</p><div class="step-code">timeout: 8s · if timeout → skip, no diagnostic shown</div></div></div>
+  <div class="step-row"><div class="step-num">4</div><div class="step-box amber"><p class="step-title">normalizer.ts maps raw output → Finding[]</p><p class="step-detail">Dedup by (filePath + lineStart + ruleId). Map Semgrep rule_id to CWE. Drop LOW severity in fast mode.</p></div></div>
+  <div class="step-row"><div class="step-num">5</div><div class="step-box gray decision"><p class="step-title">Decision: findings found?</p><p class="step-detail">No findings → return 200 empty array → LSP clears existing diagnostics for file</p></div></div>
+  <div class="step-row"><div class="step-num">6</div><div class="step-box teal"><p class="step-title">lsp.ts formats as LSP Diagnostic[]</p><p class="step-detail">severity: 1=Error (CRITICAL/HIGH), 2=Warning (MEDIUM). message = CWE name + one-line fix hint from registry.</p><div class="step-code">{ range, severity, message, code: 'CWE-89', source: 'secureguard' }</div></div></div>
+  <div class="step-row"><div class="step-num">7</div><div class="step-box green"><p class="step-title">VS Code renders inline squiggle + Problems panel entry</p><p class="step-detail">Developer sees red underline on line 23. Hovering shows message. No LLM called. Total: ~1–2s from save.</p></div></div>
+</div>
+
+<div id="tab-commit" class="wf-panel">
+  <div class="step-row"><div class="step-num">1</div><div class="step-box purple"><p class="step-title">Developer runs git commit</p><p class="step-detail">Husky pre-commit hook fires before commit is written. Hook script: npx secureguard scan --staged</p></div></div>
+  <div class="step-row"><div class="step-num">2</div><div class="step-box gray"><p class="step-title">CLI resolves staged file list</p><p class="step-detail">git diff --cached --name-only --diff-filter=ACM → filePaths[]. Filter to .ts .js .py extensions.</p><div class="step-code">scanMode: 'fast' · source: 'commit'</div></div></div>
+  <div class="step-row"><div class="step-num">3</div><div class="step-box amber"><p class="step-title">scanner.ts runs full fast suite on staged files</p><p class="step-detail">Semgrep (p/python + p/javascript) + Gitleaks + npm/pip audit for dependency CVEs</p><div class="step-code">parallel subprocess execution · all three run concurrently</div></div></div>
+  <div class="step-row"><div class="step-num">4</div><div class="step-box gray decision"><p class="step-title">Decision: CRITICAL severity found?</p><p class="step-detail">No CRITICAL → exit code 0 → commit proceeds. MEDIUM/LOW → print advisory warning, commit proceeds.</p></div></div>
+  <div class="step-row"><div class="step-num">5</div><div class="step-box red"><p class="step-title">CRITICAL found → block commit</p><p class="step-detail">exit code 1. cli.ts prints colored output to terminal with finding + quick fix hint from registry (no LLM).</p><div class="step-code">CRITICAL [CWE-89] SQL Injection · users.py:23 · Fix: use parameterized queries</div></div></div>
+  <div class="step-row"><div class="step-num">6</div><div class="step-box purple"><p class="step-title">Developer fixes issue and re-commits</p><p class="step-detail">Or uses --no-verify to bypass (logged). Bypass rate is a key metric for your demo.</p></div></div>
+</div>
+
+<div id="tab-pr" class="wf-panel">
+  <div class="step-row"><div class="step-num">1</div><div class="step-box purple"><p class="step-title">PR opened or new commit pushed</p><p class="step-detail">GitHub Actions triggers on: [pull_request]. Event: { action: 'opened'|'synchronize', pull_request: { number, head } }</p></div></div>
+  <div class="step-row"><div class="step-num">2</div><div class="step-box gray"><p class="step-title">Actions runner calls POST /pr on SecureGuard service</p><p class="step-detail">Body: { prNumber, repo, changedFiles[], baseRef, headRef, githubToken }</p><div class="step-code">ANTHROPIC_API_KEY and GITHUB_TOKEN from repo secrets</div></div></div>
+  <div class="step-row"><div class="step-num">3</div><div class="step-box amber"><p class="step-title">scanner.ts runs deep scan on all changed files</p><p class="step-detail">Semgrep full ruleset (3000+ rules, p/owasp-top-ten + custom). Bandit for Python. Full dep audit. Cross-file dataflow.</p><div class="step-code">scanMode: 'full' · timeout: 90s</div></div></div>
+  <div class="step-row"><div class="step-num">4</div><div class="step-box blue"><p class="step-title">remediator.ts calls Claude API for each HIGH/CRITICAL finding</p><p class="step-detail">buildPrompt(finding, registryEntry, codeContext) → claude-sonnet-4-6. Returns explanation + patch + testStub.</p><div class="step-code">parallel calls · max 5 concurrent · stream to buffer</div></div></div>
+  <div class="step-row"><div class="step-num">5</div><div class="step-box teal"><p class="step-title">pr.ts posts inline review comments via GitHub API</p><p class="step-detail">POST /repos/{owner}/{repo}/pulls/{pr}/reviews with comments[]. Each comment: finding + AI explanation + code suggestion block (one-click apply).</p></div></div>
+  <div class="step-row"><div class="step-num">6</div><div class="step-box red decision"><p class="step-title">policy.ts evaluates: BLOCK or PASS?</p><p class="step-detail">Any unresolved HIGH or CRITICAL → POST /repos/.../statuses with state: 'failure'. Checks branch protection — merge button grayed out.</p><div class="step-code">status context: 'secureguard/policy-gate'</div></div></div>
+  <div class="step-row"><div class="step-num">7</div><div class="step-box green"><p class="step-title">Developer applies fix → re-push → gate re-runs → PASS</p><p class="step-detail">Or security lead adds label 'security-override' → policy.ts sees label via GitHub API → posts passing status with override note in audit log.</p></div></div>
+</div>
+
+<div id="tab-chat" class="wf-panel">
+  <div class="step-row"><div class="step-num">1</div><div class="step-box purple"><p class="step-title">Developer types @secureguard in Copilot Chat</p><p class="step-detail">GitHub Copilot routes message to registered extension endpoint. POST /copilot with Copilot skill payload.</p><div class="step-code">{ messages: [...], context: { currentFile, selection, repoInfo } }</div></div></div>
+  <div class="step-row"><div class="step-num">2</div><div class="step-box gray"><p class="step-title">copilot route parses intent</p><p class="step-detail">Intent classifier (simple keyword match): 'scan file' → full scan + remediate. 'fix this' → remediate only on selection. 'explain' → registry lookup only.</p></div></div>
+  <div class="step-row"><div class="step-num">3</div><div class="step-box amber"><p class="step-title">scanner.ts scans current file or repo</p><p class="step-detail">For 'scan repo': spawn background job, return interim "scanning..." SSE event. For 'scan file': synchronous, return findings in &lt;5s.</p></div></div>
+  <div class="step-row"><div class="step-num">4</div><div class="step-box blue"><p class="step-title">remediator.ts calls Claude with full context</p><p class="step-detail">Prompt includes: vulnerable snippet, surrounding function, file imports, registry guidance, company policy. Model: claude-sonnet-4-6, max_tokens: 1000, stream: true.</p></div></div>
+  <div class="step-row"><div class="step-num">5</div><div class="step-box teal"><p class="step-title">copilot.ts streams SSE response back to VS Code</p><p class="step-detail">Markdown formatted: severity badge → explanation → code block (fixed code) → OWASP reference → "Apply this fix?" button via sendPrompt.</p><div class="step-code">Content-Type: text/event-stream · data: {token} chunks</div></div></div>
+  <div class="step-row"><div class="step-num">6</div><div class="step-box green"><p class="step-title">Developer sees streamed response in Copilot Chat panel</p><p class="step-detail">Reads explanation, copies fix, or clicks "Apply this fix?" which triggers another @secureguard message to apply the patch via VS Code workspace edit API.</p></div></div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.wf-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.wf-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
